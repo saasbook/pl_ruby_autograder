@@ -2,16 +2,16 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "pl-ruby-autograder/version"
+require "pl_ruby_autograder/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "pl-ruby-autograder"
+  spec.name          = "pl_ruby_autograder"
   spec.version       = PLRubyAutograder::VERSION
   spec.authors       = ["Armando Fox"]
   spec.email         = ["fox@berkeley.edu"]
 
   spec.summary       = %q{RSpec and Cucumber formatters and Rake tasks for autograding Ruby/Rails code via a PrairieLearn external grader}
-  spec.homepage      = %q{https://github.com/saasbook/pl-ruby-autograder}
+  spec.homepage      = %q{https://github.com/saasbook/pl_ruby_autograder}
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
     spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
     spec.metadata["homepage_uri"] = spec.homepage
-    spec.metadata["source_code_uri"] = %q{https://github.com/saasbook/pl-ruby-autograder}
+    spec.metadata["source_code_uri"] = %q{https://github.com/saasbook/pl_ruby_autograder}
     # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency 'rspec', '~> 3.0'
+  spec.add_dependency 'cucumber', '~> 3.0'
   spec.add_dependency 'json'
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "rake", "~> 10.0"

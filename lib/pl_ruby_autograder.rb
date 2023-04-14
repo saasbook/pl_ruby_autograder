@@ -2,12 +2,12 @@ module PLRubyAutograder
   require 'json'
   require 'fileutils'
 
-  # autoload :Cucumber, 'pl-ruby-autograder/cucumber'
-  autoload :Cucumber3, 'pl-ruby-autograder/cucumber3'
-  # autoload :MiniTest, 'pl-ruby-autograder/minitest/unit'
-  # autoload :RSpec, 'pl-ruby-autograder/rspec'
-  autoload :RSpec3, 'pl-ruby-autograder/rspec3'
-  # autoload :Spec, 'pl-ruby-autograder/spec'
+  # autoload :Cucumber, 'pl_ruby_autograder/cucumber'
+  autoload :Cucumber3, 'pl_ruby_autograder/cucumber3'
+  # autoload :MiniTest, 'pl_ruby_autograder/minitest/unit'
+  # autoload :RSpec, 'pl_ruby_autograder/rspec'
+  autoload :RSpec3, 'pl_ruby_autograder/rspec3'
+  # autoload :Spec, 'pl_ruby_autograder/spec'
 
   def cucumber3?
     defined?(::Cucumber) && ::Cucumber::VERSION >= '3'
