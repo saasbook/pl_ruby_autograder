@@ -1,16 +1,23 @@
 # Ruby autograding for PrairieLearn
 
 This autograder assumes a Docker container with `rvm` installed and
-the necessary versions of Ruby and all gems to grade a question.
+the necessary versions of Ruby and all gems to grade a question.  The
+`Dockerfile` in this repo, while not used by the gem, is used to build
+the image `saasbook/pl-ruby-autograder` on Dockerhub.
 
-This package includes RSpec and Cucumber test formatters whose JSON
+This gem includes RSpec and Cucumber test formatters whose JSON
 output matches what PrairieLearn wants, and `rake` tasks to run RSpec
-and Cucumber using these formatters that know where to look for
+and Cucumber that know where to look for
 various files PrairieLearn provides or expects.
 
 When the autograder wakes up, `/grade/student/` will contain file(s)
 submitted by the student, `/grade/tests/` will contain everything in
 the `tests/` directory of your PL question.
+
+(note to self: where does FPP element put student file(s)?
+see a highly stripped version in ruby-autograder/tests/basic/data.json)
+
+## Creating a Ruby coding question for autograding
 
 To autograde a Ruby question by running some collection of specs and
 features, configure your PL question directory as follows:
@@ -21,47 +28,27 @@ In `info.json`:
 "gradingMethod": "External",
 "externalGradingOptions": {
     "enabled": true,
-    "image" : "nasloon/rspec-autograder",
-    "entrypoint": "/grader/run.py",
+    "image" : "saasbook/pl-ruby-autograder",
+    "entrypoint": "/grader/run.py",  #### THIS IS WRONG
     "timeout" : 60
 }
 ```
 
+Make sure your autograder's Gemfile includes `gem 'pl-ruby-autograder` in at least the `test` gemset.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pl/ruby/autograder`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'pl-ruby-autograder'
+In the `tests/` directory in your question, create a file called `meta.json` that includes the following
+```json
+{
+    "submission_file": "file/to/submit/to.rb",
+    "submission_root": "location/to/submit/additional/files/",
+    "submit_to_line" : 3,
+    "pre-text" : "any lines to precede\n  the student's submission\n", 
+    "post-text": "any lines to succeed\n  the student's submission\n",
+    "grading_exclusions" : [
+        "Any test names that should not be included in grading"
+    ]
+}
 ```
 
-And then execute:
+In the `tests/` directory in your question, include the complete application that the student submits to. Note: do not include the text included in `meta.json`'s `"pre-text"` and `"post-text"` fields as those will be inserted during grading.
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install pl-ruby-autograder
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pl-ruby-autograder. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## Code of Conduct
-
-Everyone interacting in the Pl::Ruby::Autograder project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/pl-ruby-autograder/blob/master/CODE_OF_CONDUCT.md).
